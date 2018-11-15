@@ -1396,7 +1396,7 @@ indi_to_families (NODE indi, BOOLEAN fams)
 			{
 				INT temp = atoi(indi_to_key(spouse) + 1);
 				if (temp && temp != mykeynum)
-					spkeynum = temp;
+					spkeynum = temp;  //TODO is this right? this loop doesn't do anything
 			}
 			ENDFAMSPOUSES
 			append_indiseq_ival(seq, fkey, NULL, mykeynum, TRUE, FALSE);
@@ -2065,7 +2065,7 @@ get_all_even (void)
 		static char skey[10];
 		if (!seq)
 			seq = create_indiseq_ival();
-		sprintf(skey, "E%ld", i);
+		sprintf(skey, "E%d", i);
 		append_indiseq_ival(seq, skey, NULL, i, TRUE, FALSE);
 	}
 	return seq;
@@ -2084,7 +2084,7 @@ get_all_othe (void)
 		static char skey[10];
 		if (!seq)
 			seq = create_indiseq_ival();
-		sprintf(skey, "X%ld", i);
+		sprintf(skey, "X%d", i);
 		append_indiseq_ival(seq, skey, NULL, i, TRUE, FALSE);
 	}
 	return seq;
@@ -2192,6 +2192,14 @@ default_compare_values (VPTR ptr1, VPTR ptr2, INT valtype)
 	/* Let's just sort them in memory order */
 	return (INT)ptr1 - (INT)ptr2;
 }
+// size_t
+// default_compare_values (VPTR ptr1, VPTR ptr2, INT valtype)
+// {
+// 	valtype = valtype; /* unused */
+// 	/* We don't know how to deal with ptrs here */
+// 	/* Let's just sort them in memory order */
+// 	return ptr1 - ptr2;
+// }
 /*=======================================================
  * calc_indiseq_names -- fill in element names
  *  for any persons on list with names

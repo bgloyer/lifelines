@@ -1111,13 +1111,13 @@ verify_builtins (void)
 	for (i=0; i<nobuiltins-1; ++i) {
 		if (strcmp(builtins[i].ft_name, builtins[i+1].ft_name)>0) {
 			char msg[64];
-			sprintf(msg, "builtins array out of order ! (entries %ld,%ld)"
+			sprintf(msg, "builtins array out of order ! (entries %d,%d)"
 				, i, i+1);
 			FATAL2(msg);
 		}
 		if (builtins[i].ft_nparms_min > builtins[i].ft_nparms_max) {
 			char msg[64];
-			sprintf(msg, "builtins array bad min,max (%ld,%ld, entry %ld)"
+			sprintf(msg, "builtins array bad min,max (%d,%d, entry %d)"
 				, builtins[i].ft_nparms_min, builtins[i].ft_nparms_max
 				, i);
 			FATAL2(msg);

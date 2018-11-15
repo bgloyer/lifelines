@@ -210,12 +210,12 @@ lextok (PACTX pactx, YYSTYPE * lvalp, INT c, INT t)
 		p = tokbuf;
 		while (TRUE) {
 			while ((c = inchar(pactx)) != EOF && c != '"' && c != '\\') {
-				if (p-tokbuf > sizeof(tokbuf)/sizeof(tokbuf[0]) - 3) {
+				if (p-tokbuf > (int)(sizeof(tokbuf)/sizeof(tokbuf[0]) - 3)) {
 					/* Overflowing tokbuf buffer */
 					/* TODO: (Perry, 2006-06-30) I don't know how to fail gracefully from here inside parser */
 					char msg[512];
 					snprintf(msg, sizeof(msg)/sizeof(msg[0])
-						, _("String constant overflowing internal buffer tokbuf len=%d, file: %s, start line: %ld")
+						, _("String constant overflowing internal buffer tokbuf len=%lu, file: %s, start line: %d")
 						, sizeof(tokbuf)/sizeof(tokbuf[0])
 						, pactx->fullpath
 						, start_line + 1

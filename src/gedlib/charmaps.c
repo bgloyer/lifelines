@@ -87,8 +87,10 @@ static XNODE create_xnode(XNODE, INT, STRING);
 static BOOLEAN init_map_from_str(STRING str, CNSTRING mapname, TRANTABLE * ptt, ZSTR zerr);
 static void maperror(CNSTRING errmsg);
 static void remove_xnodes(XNODE);
+#ifdef DEBUG
 static void show_xnode(XNODE node);
 static void show_xnodes(INT indent, XNODE node);
+#endif
 static XNODE step_xnode(XNODE, INT);
 static INT translate_match(TRANTABLE tt, CNSTRING in, CNSTRING * out);
 
@@ -607,7 +609,6 @@ show_trantable (TRANTABLE tt)
 		}
 	}
 }
-#endif /* DEBUG */
 
 /*===============================================
  * show_xnodes -- DEBUG routine that shows XNODEs
@@ -638,6 +639,8 @@ show_xnode (XNODE node)
 	} else
 		llwprintf("\n");
 }
+#endif /* DEBUG */
+
 /*===================================================
  * custom_translatez -- Translate string via custom translation table
  *  zstr: [I/O] string to be translated (in-place)
@@ -762,7 +765,7 @@ get_trantable_desc (TRANTABLE tt)
 	} else {
 		zs_apps(zstr, "(Unnamed table)");
 	}
-	sprintf(buffer, " [%ld]", tt->total);
+	sprintf(buffer, " [%d]", tt->total);
 	zs_apps(zstr, buffer);
 	return zstr;
 }

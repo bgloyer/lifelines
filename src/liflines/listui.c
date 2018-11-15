@@ -503,7 +503,7 @@ shw_recordlist_list (INDISEQ seq, listdisp * ld)
 	BOOLEAN scrollable = (rows < ld->listlen);
 	/* for short lists, use leading numbers */
 	if (ld->listlen < 10) {
-		sprintf(buffer, "%ld: ", ld->listlen);
+		sprintf(buffer, "%d: ", ld->listlen);
 		i = strlen(buffer);
 		width -= i; /* for "1: " */
 		offset += i;
@@ -549,7 +549,7 @@ print_list_title (char * buffer, INT len, const listdisp * ld, STRING ttl)
 	char suffix[30];
 	if (len > uiw_cols(ld->uiwin)-2)
 		len = uiw_cols(ld->uiwin)-2;
-	sprintf(suffix, " (%ld/%ld)", ld->cur+1, ld->listlen);
+	sprintf(suffix, " (%d/%d)", ld->cur+1, ld->listlen);
 	len -= strlen(suffix)+1; /* reserve room for suffix */
 	ptr[0] = 0;
 	if ((INT)strlen(ttl)>len-1) {
@@ -579,7 +579,6 @@ shw_array_of_strings (STRING *strings, listdisp * ld, DETAILFNC detfnc
 	WINDOW *win = uiw_win(ld->uiwin);
 	INT i, j, row, lines;
 	INT rows = ld->rectList.bottom - ld->rectList.top + 1;
-	INT overflag=FALSE;
 	char buffer[120];
 	INT width = uiw_cols(ld->uiwin);
 	if (width > (INT)sizeof(buffer)-1)
@@ -614,8 +613,9 @@ shw_array_of_strings (STRING *strings, listdisp * ld, DETAILFNC detfnc
 		temp = width-6-nlen;
 		llstrncpy(buffer, strings[i], temp, uu8);
 		if ((INT)strlen(buffer) > temp-2) {
-			if (i==ld->cur)
-				overflag=TRUE;
+			if (i==ld->cur) {
+				//	overflag=TRUE;
+			}
 			strcpy(&buffer[temp-3], "...");
 		}
 		mvccwaddstr(win, row, 4+nlen, buffer);

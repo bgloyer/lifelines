@@ -72,10 +72,7 @@ main (int argc,
 	    char **argv)
 {
 	BTREE btree;
-	char cmdbuf[512];
-	char *editor;
-	char *dbname, *key;
-	RECORD_STATUS recstat;
+	char *dbname;
 	BOOLEAN cflag=FALSE; /* create new db if not found */
 	BOOLEAN writ=1; /* request write access to database */
 	BOOLEAN immut=FALSE; /* immutable access to database */
@@ -150,7 +147,6 @@ main (int argc,
 	      rc = test_nextfkey(btree);
 	printf("%s %d\n",(rc==0?"PASS":"FAIL"),rc);
 
-finish:
 	closebtree(btree);
 	btree = 0;
 	return rtn;
@@ -289,7 +285,7 @@ test_fkey2path2fkey(void)
 				   { 0x02a302a3, "zz/zz" },
 				   { 0x02a402a4, "{a/{a" } /* invalid, but we don't bounds check currently */
 	                               };
-	INT i;
+	unsigned int i;
 	INT rc=0;
 
 	if (verbose) { printf("\n"); }
@@ -327,7 +323,7 @@ test_rkey2str(void)
 	                                 { { "I1234567"  }, "I1234567" }, /* =max input record */
 	                                 { { "  I123  "  }, "I123  "   }, /* trailing blanks, not typical */
 	                               };
-	INT i;
+	unsigned int i;
 	INT rc=0;
 
 	if (verbose) { printf("\n"); }
@@ -365,7 +361,7 @@ test_str2rkey(void)
 	                                 { "I12345678", { "I1234567" } }, /* >max record (truncate) */
 	                                 { "I123  ",    { "  I123  " } }, /* trailing blanks */
 	                               };
-	INT i;
+	unsigned int i;
 	INT rc=0;
 
 	if (verbose) { printf("\n"); }
@@ -415,13 +411,13 @@ test_index(void)
 
 	if (verbose)
 	{
-		printf("%s %d\n", "ix_self",    offsetof(INDEXSTRUCT,ix_self));
-		printf("%s %d\n", "ix_type",    offsetof(INDEXSTRUCT,ix_type));
-		printf("%s %d\n", "ix_parent",  offsetof(INDEXSTRUCT,ix_parent));
-		printf("%s %d\n", "ix_nkeys",   offsetof(INDEXSTRUCT,ix_nkeys));
-		printf("%s %d\n", "ix_rkeys",   offsetof(INDEXSTRUCT,ix_rkeys));
-		printf("%s %d\n", "ix_fkeys",   offsetof(INDEXSTRUCT,ix_fkeys));
-		printf("%s %d\n", "INDEXTRUCT", sizeof(INDEXSTRUCT));
+		printf("%s %lu\n", "ix_self",    offsetof(INDEXSTRUCT,ix_self));
+		printf("%s %lu\n", "ix_type",    offsetof(INDEXSTRUCT,ix_type));
+		printf("%s %lu\n", "ix_parent",  offsetof(INDEXSTRUCT,ix_parent));
+		printf("%s %lu\n", "ix_nkeys",   offsetof(INDEXSTRUCT,ix_nkeys));
+		printf("%s %lu\n", "ix_rkeys",   offsetof(INDEXSTRUCT,ix_rkeys));
+		printf("%s %lu\n", "ix_fkeys",   offsetof(INDEXSTRUCT,ix_fkeys));
+		printf("%s %lu\n", "INDEXTRUCT", sizeof(INDEXSTRUCT));
 	}
 
 	if (offsetof(INDEXSTRUCT, ix_self)   != 0)  { rc=4; goto exit; }
@@ -461,14 +457,14 @@ int test_block(void)
 
 	if (verbose)
 	{
-		printf("%s %d\n", "ix_self",    offsetof(BLOCKSTRUCT,ix_self));
-		printf("%s %d\n", "ix_type",    offsetof(BLOCKSTRUCT,ix_type));
-		printf("%s %d\n", "ix_parent",  offsetof(BLOCKSTRUCT,ix_parent));
-		printf("%s %d\n", "ix_nkeys",   offsetof(BLOCKSTRUCT,ix_nkeys));
-		printf("%s %d\n", "ix_rkeys",   offsetof(BLOCKSTRUCT,ix_rkeys));
-		printf("%s %d\n", "ix_offs",    offsetof(BLOCKSTRUCT,ix_offs));
-		printf("%s %d\n", "ix_lens",    offsetof(BLOCKSTRUCT,ix_lens));
-		printf("%s %d\n", "BLOCKSTRUCT", sizeof(BLOCKSTRUCT));
+		printf("%s %lu\n", "ix_self",    offsetof(BLOCKSTRUCT,ix_self));
+		printf("%s %lu\n", "ix_type",    offsetof(BLOCKSTRUCT,ix_type));
+		printf("%s %lu\n", "ix_parent",  offsetof(BLOCKSTRUCT,ix_parent));
+		printf("%s %lu\n", "ix_nkeys",   offsetof(BLOCKSTRUCT,ix_nkeys));
+		printf("%s %lu\n", "ix_rkeys",   offsetof(BLOCKSTRUCT,ix_rkeys));
+		printf("%s %lu\n", "ix_offs",    offsetof(BLOCKSTRUCT,ix_offs));
+		printf("%s %lu\n", "ix_lens",    offsetof(BLOCKSTRUCT,ix_lens));
+		printf("%s %lu\n", "BLOCKSTRUCT", sizeof(BLOCKSTRUCT));
 	}
 
 	if (offsetof(BLOCKSTRUCT, ix_self)   != 0)    { rc=4;  goto exit; }
